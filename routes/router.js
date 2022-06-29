@@ -1,6 +1,11 @@
 const express = require('express');
 // ref: https://www.npmjs.com/package/generate-password
 const generator = require('generate-password');
+const {
+  emailRequired,
+  isEmailValid,
+  isPasswordValid, 
+} = require('../middlewares/loginAuthentication');
 
 const router = express.Router();
 const { readFile } = require('../helpers/readWrite');
@@ -24,7 +29,10 @@ router.get('/:id', async (req, res) => {
   });
 
 // ref: https://www.npmjs.com/package/generate-password  
-router.post('/', async (req, res) => {
+router.post('/',
+    emailRequired,
+    isEmailValid,
+    isPasswordValid, async (req, res) => {
   const token = generator.generate({
     length: 16,
     numbers: true,

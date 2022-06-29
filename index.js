@@ -1,6 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { router } = require('./routes/router');
+const {
+  emailRequired,
+  isEmailValid,
+  isPasswordValid, 
+  } = require('./middlewares/loginAuthentication');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,7 +19,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/talker', router);
-app.use('/login', router);
+app.use('/login', emailRequired, isEmailValid, isPasswordValid, router);
 app.listen(PORT, () => {
   console.log('Online');
 });
