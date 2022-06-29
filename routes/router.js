@@ -1,4 +1,6 @@
 const express = require('express');
+// ref: https://www.npmjs.com/package/generate-password
+const generator = require('generate-password');
 
 const router = express.Router();
 const { readFile } = require('../helpers/readWrite');
@@ -19,6 +21,15 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
     }
     res.status(200).json(talker);
+  });
+
+// ref: https://www.npmjs.com/package/generate-password  
+router.post('/', async (req, res) => {
+  const token = generator.generate({
+    length: 16,
+    numbers: true,
+  });
+  res.status(200).send({ token });
   });
 module.exports = {
   router,

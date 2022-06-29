@@ -14,6 +14,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/talker', router);
+app.use('/login', router);
 app.listen(PORT, () => {
   console.log('Online');
 });
