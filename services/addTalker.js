@@ -10,18 +10,3 @@ const addTalker = async (req, res) => {
 
   module.exports = {
       addTalker };
-// const addTalker = async (path, content) => {
-//         const arrContent = await readFile(path);
-//         console.log(arrContent);
-//         const newTalker = {
-//             name: content.name,
-//             age: content.age,
-//             id: arrContent.length + 1,
-//             talk: content.talk,
-//         };
-//         // console.log(newTalker);
-//         // newTalker.id = arrContent.length + 1;
-//         arrContent.push(newTalker);
-//         await fs.writeFile(path, JSON.stringify(arrContent));
-//         return newTalker;
-//     };

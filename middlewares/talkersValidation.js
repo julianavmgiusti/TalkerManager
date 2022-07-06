@@ -77,7 +77,7 @@ const nameIsRequired = (req, res, next) => {
   
   const rateRequired = (req, res, next) => {
     const rating = req.body.talk.rate;
-    if (!rating || rating === '') {
+    if ((!rating || rating === '') && Number(rating) !== 0) {
       return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
     }
     next();
