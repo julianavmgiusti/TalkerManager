@@ -126,6 +126,14 @@ router.put(
     return res.status(200).json(editedTalker);
   },
 );
+  router.delete('/talker/:id', tokenIsRequired, isTokenCorrect,
+  async (req, res) => {
+    const { id } = req.params;
+    const talkerFile = await readFile(PATH_TALKERSFILE);
+    const talkerList = JSON.parse(talkerFile).filter((talker) => talker.id !== Number(id));
+    fs.writeFileSync(PATH_TALKERSFILE, JSON.stringify(talkerList));
+    return res.status(204).json(talkerList);
+  });
 module.exports = {
   router,
 };
