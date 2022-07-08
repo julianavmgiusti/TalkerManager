@@ -34,19 +34,26 @@ router.get('/talker', async (_req, res) => {
   return res.status(200).json(JSON.parse(talkers));
 });
 
+router.get('/talker/search', tokenIsRequired, isTokenCorrect,
+  async (req, res) => {
+    const { q } = req.query;
+    const talkers = await readFile(PATH_TALKERSFILE, q);
+    if (!q) return res.status(200).json(talkers);
+    const searchTerm = JSON.parse(talkers).filter((term) => term.name.includes(q));
+    return res.status(200).json(searchTerm);
+  });
+
 router.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
   const talkers = await readFile(PATH_TALKERSFILE);
   const talker = JSON.parse(talkers).find((e) => e.id === Number(id));
   if (!talker || talker === undefined) {
-    return res
-      .status(404)
+    return res.status(404)
       .json({ message: 'Pessoa palestrante não encontrada' });
   }
   return res.status(200).json(talker);
 });
 router.get('/talker', addTalker);
-
 router.post(
   '/talker',
   tokenIsRequired,
@@ -129,11 +136,12 @@ router.put(
   router.delete('/talker/:id', tokenIsRequired, isTokenCorrect,
   async (req, res) => {
     const { id } = req.params;
-    const talkerFile = await readFile(PATH_TALKERSFILE);
-    const talkerList = JSON.parse(talkerFile).filter((talker) => talker.id !== Number(id));
+    const talkersFile = await readFile(PATH_TALKERSFILE);
+    const talkerList = JSON.parse(talkersFile).filter((talker) => talker.id !== Number(id));
     fs.writeFileSync(PATH_TALKERSFILE, JSON.stringify(talkerList));
     return res.status(204).json(talkerList);
   });
+
 module.exports = {
   router,
 };
