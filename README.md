@@ -4,7 +4,7 @@ API de um CRUD (Create, Read, Update e Delete) de palestrantes (talkers) e
 com endpoints que irão ler e escrever em um arquivo utilizando o módulo fs
 
 # Utilização
-Clonar repositório: git@github.com:julianavmgiusti/TalkerManager.git
+Clonar este repositório
 Instalar as dependências npm install
 rodar o comando npm run dev
 
